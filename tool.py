@@ -1,6 +1,13 @@
 import fire
 import string 
 import random
+import subprocess
+import requests
+
+#subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
+
+
+
 main = list(string.ascii_uppercase + string.digits + string.punctuation)
 
 def home(plainText=None,secretKey=None,cypherText=None):
@@ -57,8 +64,11 @@ AAAAAAA                   AAAAAAAmmmmmm   mmmmmm   mmmmmm rrrrrrr               
             encrypt()
         elif choice == "2":
             decrypt()
+        elif choice == "3":
+            print(joke())
         else:
-            joke()
+            print("That's not an Option ! ")
+
     elif plainText != None and secretKey != None :
         #print("enc")
         encrypt(plainText,secretKey)
@@ -169,6 +179,20 @@ def decrypt(cypherText = None , secretKey =None):
 
 
 def joke():
+    retries = 3
+    while retries > 0:
+        try:
+            response = requests.get('https://v2.jokeapi.dev/joke/Programming')
+            response.raise_for_status()  # raise an exception for 4xx and 5xx errors
+            joke = response.json()
+            if response.ok:
+                return joke['joke']
+        except requests.exceptions.RequestException as e:
+            print(f"Error: {e}")
+            retries -= 1
+    print("Failed to get a joke after 3 retries.")
+    #return None
+    
     jokes = [
     "Why did the programmer encrypt his messages? He wanted to keep them on the cipher side!",
     "Why did the encryption algorithm go to the bar? It needed a byte to drink!",
@@ -177,7 +201,7 @@ def joke():
     "What do you call an encrypted message that's difficult to decode? A hard cipher!"
     ]
     random_no = random.randint(0,4)
-    print(jokes[random_no])
+    return jokes[random_no]
 
 
 
