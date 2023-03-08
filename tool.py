@@ -9,12 +9,25 @@ def home(plainText=None,secretKey=None,cypherText=None):
         import time
 
         logo = '''
-        .------..------..------..------..------..------.
-        |A.--. ||M.--. ||R.--. ||0.--. ||0.--. ||6.--. |
-        | (\/) || (\/) || :(): || :/\: || :/\: || (\/) |
-        | :\/: || :\/: || ()() || :\/: || :\/: || :\/: |
-        | '--'A|| '--'M|| '--'R|| '--'0|| '--'0|| '--'6|
-        `------'`------'`------'`------'`------'`------'
+                                                                                                                                                                                                                                                                          
+               AAA                                                                000000000          000000000             66666666   
+              A:::A                                                             00:::::::::00      00:::::::::00          6::::::6    
+             A:::::A                                                          00:::::::::::::00  00:::::::::::::00       6::::::6     
+            A:::::::A                                                        0:::::::000:::::::00:::::::000:::::::0     6::::::6      
+           A:::::::::A              mmmmmmm    mmmmmmm   rrrrr   rrrrrrrrr   0::::::0   0::::::00::::::0   0::::::0    6::::::6       
+          A:::::A:::::A           mm:::::::m  m:::::::mm r::::rrr:::::::::r  0:::::0     0:::::00:::::0     0:::::0   6::::::6        
+         A:::::A A:::::A         m::::::::::mm::::::::::mr:::::::::::::::::r 0:::::0     0:::::00:::::0     0:::::0  6::::::6         
+        A:::::A   A:::::A        m::::::::::::::::::::::mrr::::::rrrrr::::::r0:::::0 000 0:::::00:::::0 000 0:::::0 6::::::::66666    
+       A:::::A     A:::::A       m:::::mmm::::::mmm:::::m r:::::r     r:::::r0:::::0 000 0:::::00:::::0 000 0:::::06::::::::::::::66  
+      A:::::AAAAAAAAA:::::A      m::::m   m::::m   m::::m r:::::r     rrrrrrr0:::::0     0:::::00:::::0     0:::::06::::::66666:::::6 
+     A:::::::::::::::::::::A     m::::m   m::::m   m::::m r:::::r            0:::::0     0:::::00:::::0     0:::::06:::::6     6:::::6
+    A:::::AAAAAAAAAAAAA:::::A    m::::m   m::::m   m::::m r:::::r            0::::::0   0::::::00::::::0   0::::::06:::::6     6:::::6
+   A:::::A             A:::::A   m::::m   m::::m   m::::m r:::::r            0:::::::000:::::::00:::::::000:::::::06::::::66666::::::6
+  A:::::A               A:::::A  m::::m   m::::m   m::::m r:::::r             00:::::::::::::00  00:::::::::::::00  66:::::::::::::66 
+ A:::::A                 A:::::A m::::m   m::::m   m::::m r:::::r               00:::::::::00      00:::::::::00      66:::::::::66   
+AAAAAAA                   AAAAAAAmmmmmm   mmmmmm   mmmmmm rrrrrrr                 000000000          000000000          666666666     
+
+
         '''
 
         lines = logo.split('\n')
@@ -33,12 +46,12 @@ def home(plainText=None,secretKey=None,cypherText=None):
         # Print the logo line by line with a delay
         for line in lines:
             print(line)
-            time.sleep(0.2)  # Add a 0.1 second delay between each line
+            time.sleep(0.1)  # Add a 0.1 second delay between each line
 
         print("1) Encrypt ")
         print("2) Decrypt ")
         print("3) Joke ")
-        choice = input("Make your choice by numbers 1 --> 3 !!!")
+        choice = input("Make your choice by numbers 1 --> 3 : ")
 
         if choice == "1":
             encrypt()
@@ -47,7 +60,7 @@ def home(plainText=None,secretKey=None,cypherText=None):
         else:
             joke()
     elif plainText != None and secretKey != None :
-        print("enc")
+        #print("enc")
         encrypt(plainText,secretKey)
     elif cypherText != None and secretKey != None :
         decrypt(cypherText,secretKey)
@@ -59,11 +72,11 @@ def home(plainText=None,secretKey=None,cypherText=None):
 
 def encrypt(plainText=None,secretKey=None):
     if plainText == None and secretKey == None :
-        plainText = input("your text you want to encrypt : ").upper()
-        secretKey = input("enter your secretKey must be at least four unique letters/digits  : ").upper()
-    plainText.upper()
-    secretKey.upper()
-    unique_chars = list(set(secretKey.upper()))
+        plainText = input(r"your text you want to encrypt : ")
+        secretKey = input(r"enter your secretKey must be at least four unique letters/digits  : ")
+    plainText = plainText.upper()
+    secretKey = secretKey.upper()
+    unique_chars = list(set(secretKey))
     unique_chars.sort()
     space = unique_chars[-1]
     betweenLetters = unique_chars[-2]
@@ -93,7 +106,7 @@ def encrypt(plainText=None,secretKey=None):
     #print(myCyberGuid)
 
     cypherText = ""
-    for c in plainText.upper():
+    for c in plainText:
         if c == " ":
             cypherText += space
         else: 
@@ -105,11 +118,11 @@ def encrypt(plainText=None,secretKey=None):
 
 def decrypt(cypherText = None , secretKey =None):
     if cypherText == None and secretKey == None :
-        cypherText = input("your text you want to decrypt : ").upper()
-        secretKey = input("enter your secretKey must be at least four unique letters/digits  : ").upper()
-    cypherText.upper()
-    secretKey.upper()
-    unique_chars = list(set(secretKey.upper()))
+        cypherText = input(r"your text you want to decrypt : ")
+        secretKey = input(r"enter your secretKey must be at least four unique letters/digits  : ")
+    cypherText = cypherText.upper()
+    secretKey = secretKey.upper()
+    unique_chars = list(set(secretKey))
     unique_chars.sort()
     space = unique_chars[-1]
     betweenLetters = unique_chars[-2]
@@ -169,6 +182,8 @@ def joke():
 
 
 if __name__== '__main__':
-    fire.Fire(home)
-
+    try:
+        fire.Fire(home)
+    except KeyboardInterrupt:
+        print("\nleaving !!")
     
