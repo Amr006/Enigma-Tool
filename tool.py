@@ -16,25 +16,13 @@ def home(plainText=None,secretKey=None,cypherText=None):
         import time
 
         logo = '''
-                                                                                                                                                                                                                                                                          
-               AAA                                                                000000000          000000000             66666666   
-              A:::A                                                             00:::::::::00      00:::::::::00          6::::::6    
-             A:::::A                                                          00:::::::::::::00  00:::::::::::::00       6::::::6     
-            A:::::::A                                                        0:::::::000:::::::00:::::::000:::::::0     6::::::6      
-           A:::::::::A              mmmmmmm    mmmmmmm   rrrrr   rrrrrrrrr   0::::::0   0::::::00::::::0   0::::::0    6::::::6       
-          A:::::A:::::A           mm:::::::m  m:::::::mm r::::rrr:::::::::r  0:::::0     0:::::00:::::0     0:::::0   6::::::6        
-         A:::::A A:::::A         m::::::::::mm::::::::::mr:::::::::::::::::r 0:::::0     0:::::00:::::0     0:::::0  6::::::6         
-        A:::::A   A:::::A        m::::::::::::::::::::::mrr::::::rrrrr::::::r0:::::0 000 0:::::00:::::0 000 0:::::0 6::::::::66666    
-       A:::::A     A:::::A       m:::::mmm::::::mmm:::::m r:::::r     r:::::r0:::::0 000 0:::::00:::::0 000 0:::::06::::::::::::::66  
-      A:::::AAAAAAAAA:::::A      m::::m   m::::m   m::::m r:::::r     rrrrrrr0:::::0     0:::::00:::::0     0:::::06::::::66666:::::6 
-     A:::::::::::::::::::::A     m::::m   m::::m   m::::m r:::::r            0:::::0     0:::::00:::::0     0:::::06:::::6     6:::::6
-    A:::::AAAAAAAAAAAAA:::::A    m::::m   m::::m   m::::m r:::::r            0::::::0   0::::::00::::::0   0::::::06:::::6     6:::::6
-   A:::::A             A:::::A   m::::m   m::::m   m::::m r:::::r            0:::::::000:::::::00:::::::000:::::::06::::::66666::::::6
-  A:::::A               A:::::A  m::::m   m::::m   m::::m r:::::r             00:::::::::::::00  00:::::::::::::00  66:::::::::::::66 
- A:::::A                 A:::::A m::::m   m::::m   m::::m r:::::r               00:::::::::00      00:::::::::00      66:::::::::66   
-AAAAAAA                   AAAAAAAmmmmmm   mmmmmm   mmmmmm rrrrrrr                 000000000          000000000          666666666     
-
-
+           
+ █████╗ ███╗   ███╗██████╗  ██████╗  ██████╗  ██████╗ 
+██╔══██╗████╗ ████║██╔══██╗██╔═████╗██╔═████╗██╔════╝ 
+███████║██╔████╔██║██████╔╝██║██╔██║██║██╔██║███████╗ 
+██╔══██║██║╚██╔╝██║██╔══██╗████╔╝██║████╔╝██║██╔═══██╗
+██║  ██║██║ ╚═╝ ██║██║  ██║╚██████╔╝╚██████╔╝╚██████╔╝
+╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝  ╚═════╝ 
         '''
 
         lines = logo.split('\n')
@@ -57,7 +45,7 @@ AAAAAAA                   AAAAAAAmmmmmm   mmmmmm   mmmmmm rrrrrrr               
 
         print("1) Encrypt ")
         print("2) Decrypt ")
-        print("3) Joke ")
+        print("3) Joke :) ")
         choice = input("Make your choice by numbers 1 --> 3 : ")
 
         if choice == "1":
@@ -82,19 +70,27 @@ AAAAAAA                   AAAAAAAmmmmmm   mmmmmm   mmmmmm rrrrrrr               
 
 def encrypt(plainText=None,secretKey=None):
     if plainText == None and secretKey == None :
-        plainText = input(r"your text you want to encrypt : ")
-        secretKey = input(r"enter your secretKey must be at least four unique letters/digits  : ")
-    plainText = plainText.upper()
-    secretKey = secretKey.upper()
+        plainText = str(input(r"your text you want to encrypt : "))
+        secretKey = str(input(r"Your secret key : "))
+    #plainText = plainText
+    secretKey = secretKey.replace(" ","") #to remove spaces
     unique_chars = list(set(secretKey))
+    while len(unique_chars) < 3:
+        print(r"**Your secret key must have at least 3 unique characters/digits/symbols**")
+        secretKey = input(r"Your secret key : ")
+        secretKey = secretKey.replace(" ","") 
+        unique_chars = list(set(secretKey))
+        
+    
+    secretKey = secretKey.upper()
     unique_chars.sort()
     space = unique_chars[-1]
     betweenLetters = unique_chars[-2]
-    unique_chars = unique_chars[:-2]
+    unique_chars = unique_chars[:-2] 
     #print(unique_chars)
     numberOfUniqueSecretKeyLetters = len(unique_chars)
-    plainTextCharacters = plainText.replace(" ","")
-    plainTextCharacters = list("".join(plainTextCharacters.upper()))
+    plainTextCharacters = plainText.replace(" ","") #to remove spaces 
+    plainTextCharacters = list("".join(plainTextCharacters))#list characters of the plaintext
     
     #print(plainTextCharacters)
     #numberOfUniquePlainTextLetters = len(plainTextCharacters)
@@ -120,17 +116,20 @@ def encrypt(plainText=None,secretKey=None):
         if c == " ":
             cypherText += space
         else: 
-            cypherText += myCyberGuid[c] + betweenLetters
-        
+            if c.isupper():
+                cypherText +='~' + myCyberGuid[c.upper()] + betweenLetters
+            else:
+                cypherText += myCyberGuid[c.upper()] + betweenLetters
     
-    print(cypherText)
+    print("Your encrypted message : " + cypherText)
 
 
 def decrypt(cypherText = None , secretKey =None):
     if cypherText == None and secretKey == None :
-        cypherText = input(r"your text you want to decrypt : ")
-        secretKey = input(r"enter your secretKey must be at least four unique letters/digits  : ")
+        cypherText = str(input(r"Your text you want to decrypt : "))
+        secretKey = str(input(r"Your secret key : "))
     cypherText = cypherText.upper()
+    secretKey = secretKey.replace(" ","") #to remove spaces
     secretKey = secretKey.upper()
     unique_chars = list(set(secretKey))
     unique_chars.sort()
@@ -163,45 +162,59 @@ def decrypt(cypherText = None , secretKey =None):
 
     plainText = ""
     temp = ""
+    cap = False
     for c in cypherText:
-        if c == space:
+        if c == '~':
+            cap = True
+        elif c == space:
             plainText += " "
         elif c == betweenLetters: 
-            plainText += myCyberGuid[temp] 
-            temp = ""
+            if cap == True:
+                plainText += myCyberGuid[temp]
+                temp = ""
+                cap = False
+            else:
+                plainText += myCyberGuid[temp].lower()
+                temp = ""
         else:
             temp += c
         
         #print(temp)
     
-    print(plainText)
+    print("Your secret message : " + plainText)
 
 
 
 def joke():
-    retries = 3
-    while retries > 0:
-        try:
-            response = requests.get('https://v2.jokeapi.dev/joke/Programming')
-            response.raise_for_status()  # raise an exception for 4xx and 5xx errors
-            joke = response.json()
-            if response.ok:
-                return joke['joke']
-        except requests.exceptions.RequestException as e:
-            print(f"Error: {e}")
-            retries -= 1
-    print("Failed to get a joke after 3 retries.")
-    #return None
-    
+    #list of jokes for backup if the API didnt work or no internet :)
     jokes = [
     "Why did the programmer encrypt his messages? He wanted to keep them on the cipher side!",
     "Why did the encryption algorithm go to the bar? It needed a byte to drink!",
     "Why did the decryption function refuse to work? It had trust issues!",
     "Why did the programmer use a Caesar cipher? He wanted to keep the message in Roman code!",
     "What do you call an encrypted message that's difficult to decode? A hard cipher!"
-    ]
+    ] 
+
     random_no = random.randint(0,4)
-    return jokes[random_no]
+    retries = 3
+    while retries > 0:
+        try:
+            response = requests.get('https://v2.jokeapi.dev/joke/Programming')
+            response.raise_for_status()  # raise an exception for 4xx and 5xx errors
+            joke = response.json()
+            if 'joke' in joke:
+                return joke['joke']
+            else:
+                return jokes[random_no]
+        except requests.exceptions.RequestException as e:
+            print(f"Error: {e}")
+            retries -= 1
+    print("Failed to get a joke after 3 retries.")
+    #return None
+    
+    
+    
+    
 
 
 
