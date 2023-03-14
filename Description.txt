@@ -16,6 +16,9 @@ you can you this tool in two different ways :
     
     output : 
     Your secret message : My encrypted message !
+
+
+    disclaimer : if you are going to use switchs you if you exprienced any probelm with encryption you can try  -p "''"  instead and if thee still a problem you can use cmd interface   
     
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
