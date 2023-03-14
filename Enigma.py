@@ -72,8 +72,9 @@ def encrypt(plainText=None,secretKey=None):
     if plainText == None and secretKey == None :
         plainText = str(input(r"your text you want to encrypt : "))
         secretKey = str(input(r"Your secret key : "))
-    #plainText = plainText
-    secretKey = secretKey.replace(" ","") #to remove spaces
+    plainText = str(plainText)
+    print(plainText)
+    secretKey = str(secretKey).replace(" ","") #to remove spaces
     unique_chars = list(set(secretKey))
     while len(unique_chars) < 3:
         print(r"**Your secret key must have at least 3 unique characters/digits/symbols**")
@@ -128,8 +129,8 @@ def decrypt(cypherText = None , secretKey =None):
     if cypherText == None and secretKey == None :
         cypherText = str(input(r"Your text you want to decrypt : "))
         secretKey = str(input(r"Your secret key : "))
-    cypherText = cypherText.upper()
-    secretKey = secretKey.replace(" ","") #to remove spaces
+    cypherText = str(cypherText).upper()
+    secretKey = str(secretKey).replace(" ","") #to remove spaces
     secretKey = secretKey.upper()
     unique_chars = list(set(secretKey))
     unique_chars.sort()
@@ -204,6 +205,8 @@ def joke():
             joke = response.json()
             if 'joke' in joke:
                 return joke['joke']
+            elif retries > 0:
+                retries -= 1
             else:
                 return jokes[random_no]
         except requests.exceptions.RequestException as e:
