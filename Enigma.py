@@ -1,10 +1,9 @@
 import fire
 import string 
 import random
-import subprocess
 import requests
 
-#subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
+
 
 
 
@@ -73,7 +72,7 @@ def encrypt(plainText=None,secretKey=None):
         plainText = str(input(r"your text you want to encrypt : "))
         secretKey = str(input(r"Your secret key : "))
     plainText = str(plainText)
-    print(plainText)
+    #print(plainText)
     secretKey = str(secretKey).replace(" ","") #to remove spaces
     unique_chars = list(set(secretKey))
     while len(unique_chars) < 3:
