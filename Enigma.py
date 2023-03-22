@@ -74,11 +74,13 @@ def encrypt(plainText=None,secretKey=None):
     plainText = str(plainText)
     #print(plainText)
     secretKey = str(secretKey).replace(" ","") #to remove spaces
+    secretKey = secretKey.upper()
     unique_chars = list(set(secretKey))
     while len(unique_chars) < 3:
         print(r"**Your secret key must have at least 3 unique characters/digits/symbols**")
         secretKey = input(r"Your secret key : ")
         secretKey = secretKey.replace(" ","") 
+        secretKey = secretKey.upper()
         unique_chars = list(set(secretKey))
         
     
