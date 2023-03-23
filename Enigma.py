@@ -208,12 +208,11 @@ def joke():
                 return joke['joke']
             elif retries > 0:
                 retries -= 1
-            else:
-                return jokes[random_no]
+            
         except requests.exceptions.RequestException as e:
             print(f"Error: {e}")
             retries -= 1
-    print("Failed to get a joke after 3 retries.")
+    return jokes[random_no]
     #return None
     
     
