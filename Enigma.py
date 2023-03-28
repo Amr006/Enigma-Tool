@@ -9,9 +9,9 @@ import requests
 
 main = list(string.ascii_uppercase + string.digits + string.punctuation)
 
-def home(plainText=None,secretKey=None,cypherText=None):
+def home(plainText=None,secretKey=None,cypherText=None,encryptFilePath=None,decryptFilePath=None,output="output.txt"):
 
-    if plainText == None and secretKey == None and  cypherText == None :
+    if plainText == None and secretKey == None and  cypherText == None and encryptFilePath==None and decryptFilePath==None and output=="output.txt":
         import time
 
         logo = '''
@@ -48,23 +48,101 @@ def home(plainText=None,secretKey=None,cypherText=None):
         choice = input("Make your choice by numbers 1 --> 3 : ")
 
         if choice == "1":
-            encrypt()
+            print("1) Take input from here ")
+            print("2) Take input from file ")
+            choice = input("Make your choice by numbers 1 --> 2 : ")
+            if choice == "1":
+                print("Your encrypted message : " + encrypt())
+            elif choice == "2":
+                encryptInFile()
+            else:
+                 print("That's not an Option ! ")
+
+            
         elif choice == "2":
-            decrypt()
+            print("1) Take input from here ")
+            print("2) Take input from file ")
+            choice = input("Make your choice by numbers 1 --> 2 : ")
+            if choice == "1":
+                print("Your decrypted message : " + decrypt())
+            elif choice == "2":
+                decryptInFile()
+            else:
+                 print("That's not an Option ! ")
+                 
+            
         elif choice == "3":
             print(joke())
         else:
             print("That's not an Option ! ")
 
     elif plainText != None and secretKey != None :
-        #print("enc")
-        encrypt(plainText,secretKey)
+        encryptInFile(filePath,output)
+        
     elif cypherText != None and secretKey != None :
-        decrypt(cypherText,secretKey)
+      decrypt(cypherText,secretKey)
+    
+    elif encryptFilePath != None and secretKey != None:
+        encryptInFile(encryptFilePath,secretKey,output)
+
+    elif decryptFilePath != None and secretKey != None:
+        decryptInFile(decryptFilePath,secretKey,output)
+        
     else:
         print("Something Went Worng !!")
     
 
+def outputFile(list,output):
+    with open(output, 'w') as file:
+        for item in list:
+            file.write("%s\n" % item)
+    
+    
+
+def encryptInFile(filePath=None,secretKey=None,output="output.txt"):  
+    if filePath==None :
+        filePath = str(input("your input file : "))  
+        secretKey = str(input(r"Your secret key : "))
+        output = str(input("your output file name : "))
+    try:
+        with open(filePath, 'r') as file:
+            lines = [line.strip() for line in file.readlines()]
+        
+        encryptedLines = []
+        for line in lines:
+            encryptedLines.append(encrypt(line,secretKey))
+
+        outputFile(encryptedLines,output)
+    except FileNotFoundError:
+        print("The file does not exist!")
+    
+
+def decryptInFile(filePath=None,secretKey=None,output="output.txt"):  
+    if filePath == None:
+        filePath = str(input("your input file : "))  
+        secretKey = str(input(r"Your secret key : "))
+        output = str(input("your output file name : "))
+    try:
+        with open(filePath, 'r') as file:
+            lines = [line.strip() for line in file.readlines()]
+            
+        decryptedLines = []
+
+        for line in lines:
+            decryptedLines.append(decrypt(line,secretKey))
+
+        outputFile(decryptedLines,output)
+    except FileNotFoundError:
+        print("The file does not exist!")
+
+    
+
+    
+    
+    
+
+
+    
 
 
 def encrypt(plainText=None,secretKey=None):
@@ -123,10 +201,10 @@ def encrypt(plainText=None,secretKey=None):
             else:
                 cypherText += myCyberGuid[c.upper()] + betweenLetters
     
-    print("Your encrypted message : " + cypherText)
+    return (cypherText)
 
 
-def decrypt(cypherText = None , secretKey =None):
+def decrypt(cypherText=None , secretKey =None):
     if cypherText == None and secretKey == None :
         cypherText = str(input(r"Your text you want to decrypt : "))
         secretKey = str(input(r"Your secret key : "))
@@ -183,7 +261,7 @@ def decrypt(cypherText = None , secretKey =None):
         
         #print(temp)
     
-    print("Your secret message : " + plainText)
+    return(plainText)
 
 
 
