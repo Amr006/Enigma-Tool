@@ -77,10 +77,10 @@ def home(plainText=None,secretKey=None,cypherText=None,encryptFilePath=None,decr
             print("That's not an Option ! ")
 
     elif plainText != None and secretKey != None :
-        encryptInFile(filePath,output)
+        print(encrypt(plainText,secretKey))
         
     elif cypherText != None and secretKey != None :
-      decrypt(cypherText,secretKey)
+      print(decrypt(cypherText,secretKey))
     
     elif encryptFilePath != None and secretKey != None:
         encryptInFile(encryptFilePath,secretKey,output)
