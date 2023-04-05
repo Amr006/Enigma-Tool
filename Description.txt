@@ -17,6 +17,16 @@ you can you this tool in two different ways :
     output : 
     Your secret message : My encrypted message !
 
+3) you can use files :
+	-e for the file you want to encrypt 
+	-d for the file you want to decrypt
+	-o to set the name of the output file
+	and ofcourse dont forget -s to set the secret key
+	example :
+	python Enigma.py -e "imp.txt" -s "secretKey" -o "encryptImp.txt"
+	python Enigma.py -d "encryptImp.txt" -s "secretKey" -o "decryptImp.txt"
+		
+	
 
     disclaimer : if you are going to use switchs you if you exprienced any probelm with encryption you can try  -p "''"  instead and if thee still a problem you can use cmd interface   
     
